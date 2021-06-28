@@ -15,10 +15,6 @@ type IpTableProps = {
   timezone?: string;
 }
 
-export interface IpTableArray {
-  results: IpTableProps[];
-}
-
 function App() {
 
   const [error, setError] = useState(null);
@@ -26,13 +22,8 @@ function App() {
   const [items, setItems] = useState<IpTableProps>();
 
   useEffect(() => {
-    const requestOptions: RequestInit = {
-      method: 'GET',
-      redirect: 'follow'
-    };
 
-
-    fetch(`https://ipinfo.io/?token=${process.env.REACT_APP_TOKEN}`, requestOptions)
+    fetch(`https://ipinfo.io/?token=${process.env.REACT_APP_TOKEN}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -41,6 +32,8 @@ function App() {
         },
 
         (error) => {
+          console.log(error)
+
           setIsLoaded(true);
           setError(error);
         }
@@ -74,7 +67,11 @@ function App() {
             />
             : <Loading />
           }
+          <div className="App-footer">
+            Copyright © 2021  Made by <a href="https://github.com/erdoganabaci">Erdogan</a>
+          </div>
         </header>
+
       </div>
     );
   }
